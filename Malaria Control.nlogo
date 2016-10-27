@@ -151,6 +151,8 @@ to do-plots
 
 ;
 ; *** End of NetLogo 4.0.2 Model Copyright Notice ***
+
+; resaved in NetLogo 5.3.1 by Bastiaan Quast on 2016-10-27
 @#$#@#$#@
 GRAPHICS-WINDOW
 383
@@ -378,7 +380,6 @@ Richmond Public Schools, Richmond, VA
 
 In other publications, please use:
 Copyright 2008 Erin S. Flanagan.  All rights reserved.
-
 @#$#@#$#@
 default
 true
