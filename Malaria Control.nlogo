@@ -1,128 +1,132 @@
 
 breed [mosquitoes mosquito]
-breed [people person]  
-breed [doctors doctor ]    
+breed [people person]
+breed [doctors doctor ]
 
 to setup
-  clear-all               ;; clear all patches and turtles
-  
-  
-  set-default-shape people "person"  
+  ;; (for this model to work with NetLogo's new plotting features,
+  ;; __clear-all-and-reset-ticks should be replaced with clear-all at
+  ;; the beginning of your setup procedure and reset-ticks at the end
+  ;; of the procedure.)
+  __clear-all-and-reset-ticks               ;; clear all patches and turtles
+
+
+  set-default-shape people "person"
     create-people 35 [
-    set color blue 
+    set color blue
     if who < initial-sick-people [set color red] ; these people start off with malaria
       set size 1.5  ;; easier to see
     setxy random-xcor random-ycor ;they are spread out randomly
     ifelse bed-nets ; if people use bed nets the people without malaria will be yellow and can not be bitten by a mosquito
             [ask people [if who >= initial-sick-people [set color yellow] ] ]
             [ask people [if who >= initial-sick-people [set color blue] ] ]
-    
+
   ]
   set-default-shape mosquitoes "mosquito"  ;; shape is defined in Turtle Shapes Editor
    create-mosquitoes initial-number-mosquitoes ;; create the mosquitoes, then initialize their variables
-  [ 
+  [
     set color green
     set size 0.75  ;; easier to see
     setxy random-xcor random-ycor
-      
+
   ]
-  
-  set-default-shape doctors "doctor" 
-  
+
+  set-default-shape doctors "doctor"
+
   ifelse medicine ; if the medicine switch is set to 'on' then 5 randomly placed stationary doctors will be available
     [create-doctors 5  ask doctors [(set size 1.5) (setxy random-xcor random-ycor)]]
     [create-doctors 0]
-  
 
-   
+
+
  end
 
 to go
   move-mosquitoes
   move-people
-  do-plots 
+  do-plots
 end
 
 
 
-  
+
 to move-people
-  ask people 
-  [ 
+  ask people
+  [
     rt random 100 ;people move around the world randomly
     lt random 100
     fd 1
-    
+
     ifelse color = red ;if people are infectious they will infect mosquitoes who bite them in relation to the bite-likelihood
       [ask mosquitoes in-radius bite-likelihood
-        [if any? mosquitoes with [color = green] 
+        [if any? mosquitoes with [color = green]
                       [set color red]
         ]
-      ]   
-        
+      ]
+
       [ask mosquitoes in-radius bite-likelihood ; if people are not infectious they can be infected by infectious mosquitoes in relation to the bite-likelihood
         [ifelse color = red ;if mosquitoes are infectious they can infect nearby non-infected people
                       [ask people in-radius bite-likelihood [if any? people in-radius bite-likelihood with [color = blue]
                                                                               [set color red] ]]
                       [ask people in-radius bite-likelihood with [color = blue] [if any? people in-radius bite-likelihood with [color = blue]
                                                                               [set color blue]] ;if noninfectious mosquitoes bite noninfectious people, nothing happens
-                   
-       ] 
-      ] 
+
+       ]
+      ]
     ]
-       
-   
+
+
    ifelse medicine ;if the medicine switch is on
-        [ask doctors in-radius .5  [if any? people in-radius .5 with [color = red] 
+        [ask doctors in-radius .5  [if any? people in-radius .5 with [color = red]
                                                                   [ask people in-radius .5 with [color = red] ;doctors will cure nearby infectious people or people who 'visit' them
-                                                                  
+
                                                                   [ifelse bed-nets ;when bed-nets are used, doctors will cure nearby infectious people and give them a bed-net
-                                                                        [ask people in-radius .5 with [color = red] 
+                                                                        [ask people in-radius .5 with [color = red]
                                                                         [set color yellow] ]
-                                                                        [ask people in-radius .5 with [color = red] 
+                                                                        [ask people in-radius .5 with [color = red]
                                                                         [set color blue]] ]]]]
-                     
+
         [ask doctors in-radius .5 [if any? people in-radius .5 with [color = red] ;if the switch is off there are no doctors so this will not happen
                                                                   [ask people  in-radius .5
                                                                   [set color blue] ]] ]
-   
-    
-  
+
+
+
    ifelse spray-insecticide ;if the insecticide switch is set on
-     [ask people 
+     [ask people
              [set pcolor green - 4] ] ;people will spray patches around them a light green color
-              
-      [ask people 
+
+      [ask people
              [set pcolor black] ] ;if switch is off the patches will stay black
-                                
+
     ]
       tick
 end
 
-to move-mosquitoes  
-  ask mosquitoes 
+to move-mosquitoes
+  ask mosquitoes
   [ rt random 100
     lt random 100
-    fd 1 
-  ] 
-  
-  tick 
-  
+    fd 1
+  ]
+
+  tick
+
   ifelse spray-insecticide ; if the insecticide switch is set on
-    [ask patches with [pcolor = green - 4] 
+    [ask patches with [pcolor = green - 4]
                              [ask mosquitoes in-radius 1 with [who = random 200] [die]]] ;light green patches that come into contact with mosquitoes will throw out a random number from 1-200, if the number matches the mosquito's who number than it dies
-    [if any? mosquitoes with [who = 0] 
+    [if any? mosquitoes with [who = 0]
                              [ask mosquitoes [die]]] ;if the switch is off this will happen...however no mosquito has a who number of 0 so it is impossible to kill mosquitoes unless the switch is set to on
-    
-       
-    
+
+
+
 end
 
 to do-plots
   set-current-plot "Totals"
   set-current-plot-pen "people"
   plot count people with [color = red]
- 
+
  end
 
 
@@ -173,14 +177,7 @@ GRAPHICS-WINDOW
 1
 1
 days
-
-CC-WINDOW
-5
-430
-927
-525
-Command Center
-0
+30.0
 
 BUTTON
 24
@@ -197,6 +194,7 @@ NIL
 NIL
 NIL
 NIL
+1
 
 BUTTON
 145
@@ -213,6 +211,7 @@ NIL
 NIL
 NIL
 NIL
+1
 
 SLIDER
 19
@@ -317,25 +316,26 @@ number of sick people
 100.0
 true
 false
+"" ""
 PENS
-"default" 1.0 0 -16777216 true
-"people" 1.0 0 -16777216 true
+"default" 1.0 0 -16777216 true "" ""
+"people" 1.0 0 -16777216 true "" ""
 
 @#$#@#$#@
-WHAT IS IT?
------------
+## WHAT IS IT?
+
 This model relates the number of people infected with malaria with the use of various control measures such as bed-nets, insecticide, and medicine within a population.  This model was created for elementary students to use and thus the actual transmission rate of the virus has been simplified so that students may interpret the results with no prior knowledge of the disease and limited graphing skills.
 
-HOW IT WORKS
-------------
+## HOW IT WORKS
+
 People contact malaria when bitten by a mosquito carrying the plasmodium parasite.  Infected people bitten by mosquitoes transmit the plasmodium parasite back to the mosquito - propagating the cycle.  This model seeks to demonstrate that relationship as well as the affects of control measures in place to combact the disease.
 
-HOW TO USE IT
--------------
+## HOW TO USE IT
+
 Users choose the initial number of parasite-transmitting mosquitoes to reflect a location as well as the initial number of infected people in the population.  Users also determine a bite-likelihood, which is basically the chance a given person will be in the same space as a mosquito and be bitten.  The graph records the amount of infected people over time within the selected constraints.  Users can also turn on/off three different control measures (or a combination of the three) that will influence the transmission of the disease and affect the amount of sick people in the population.
 
-THINGS TO NOTICE
-----------------
+## THINGS TO NOTICE
+
 This model has several major assumptions:
 
 1. Humans do not reproduce or die.
@@ -344,10 +344,10 @@ This model has several major assumptions:
 4. Cured people (by medicine) cannot get sick again.
 5. There is no delay in the mosquito acquiring the parasite and becoming infectious.
 
-These assumptions were necessary to keep the program simple and straightforward, but do affect the accuracy of the results.  However, infection trends and the overall effectiveness of control methods while generalized, does give students a sense of the relationships.  
+These assumptions were necessary to keep the program simple and straightforward, but do affect the accuracy of the results.  However, infection trends and the overall effectiveness of control methods while generalized, does give students a sense of the relationships.
 
-THINGS TO TRY
--------------
+## THINGS TO TRY
+
 Here are three scenarios I used with my own class:
 
 1.A person returns to Anytown, USA from a trip to Africa where he has contacted malaria. Should we people worried? Use the model to demonstrate why or why not. (Students should set initial infected to 1, bite likelihood low, and initial # mosquitoes low).
@@ -356,8 +356,8 @@ Here are three scenarios I used with my own class:
 
 3.Malaria in endemic in areas with tropical climates.  Endemic means lots of people have gotten the disease and continue to get the disease today.  Why would people living in tropical areas get malaria more often?  Set up the model so that lots of people get the disease over time.  What do you notice?  (Student should set the model so that the number of initial people infected is high, with a lot of mosquitoes and a high bite-likelihood and little controls in place...this will produce "endemic" results).
 
-CREDITS AND REFERENCES
-----------------------
+## CREDITS AND REFERENCES
+
 This model was created as a project in conjunction with Virginia Commonwealth
 Univerity Bioinformatics and Bioengineering Summer Institute.
 
@@ -376,10 +376,8 @@ Flanagan, E.S. (2008).  NetLogo Malaria Control model.
 Mary Munford Elementary School
 Richmond Public Schools, Richmond, VA
 
-
 In other publications, please use:
 Copyright 2008 Erin S. Flanagan.  All rights reserved.
-
 
 @#$#@#$#@
 default
@@ -740,7 +738,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 4.0.2
+NetLogo 5.3.1
 @#$#@#$#@
 setup
 repeat 2 [ move-fish ]
@@ -759,4 +757,6 @@ true
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
 
+@#$#@#$#@
+0
 @#$#@#$#@
