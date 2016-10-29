@@ -3,15 +3,15 @@ globals [
   min-energy           ;; the minimum amount of energy an animal needs to reproduce
   max-stride           ;; the maximum stride length, the minimum stride length is 0,
                        ;; the stride will always be between these limits
-  wolf-gain-from-food  ;; energy units wolves get for eating
+  mosquito-gain-from-food  ;; energy units mosquitoes get for eating
   sheep-gain-from-food ;; energy units sheep get for eating
   sheep-reproduce      ;; probability that sheep will reproduce at each time step
-  wolf-reproduce       ;; probability that wolves will reproduce at each time step
+  mosquito-reproduce       ;; probability that mosquitoes will reproduce at each time step
   grass-regrowth-time  ;; number of ticks before eaten grass regrows.
 ]
 
 breed [sheep a-sheep]
-breed [wolves wolf]
+breed [mosquitoes mosquito]
 
 turtles-own [ energy stride-length ]
 patches-own [ countdown ]  ;; patches countdown until they regrow
@@ -22,10 +22,10 @@ to setup
   set max-stride 3
   set min-energy 200
   set max-energy 500
-  set wolf-gain-from-food 20
+  set mosquito-gain-from-food 20
   set sheep-gain-from-food 20
   set sheep-reproduce 5
-  set wolf-reproduce 6
+  set mosquito-reproduce 6
   set grass-regrowth-time 138
 
   ;; setup the grass
@@ -46,11 +46,11 @@ to setup
     setxy random-xcor random-ycor
   ]
 
-  set-default-shape wolves "wolf"
-  create-wolves initial-number-wolves  ;; create the wolves, then initialize their variables
+  set-default-shape mosquitoes "mosquito"
+  create-mosquitoes initial-number-mosquitoes  ;; create the mosquitoes, then initialize their variables
   [
     set color black
-    set stride-length initial-wolf-stride
+    set stride-length initial-mosquito-stride
     set size max-stride  ;; easier to see
     set energy random max-energy
     setxy random-xcor random-ycor
@@ -72,9 +72,9 @@ to go
     maybe-die
     reproduce-sheep
   ]
-  ask wolves [
+  ask mosquitoes [
     move
-    ;; wolves always loose 0.5 units of energy each tick
+    ;; mosquitoes always loose 0.5 units of energy each tick
     set energy energy - 0.5
     ;; if larger strides use more energy
     ;; also deduct the energy for the distance moved
@@ -82,7 +82,7 @@ to go
     [ set energy energy - stride-length ]
     catch-sheep
     maybe-die
-    reproduce-wolves
+    reproduce-mosquitoes
   ]
   ask patches [ grow-grass ]
   tick
@@ -108,8 +108,8 @@ to reproduce-sheep  ;; sheep procedure
   reproduce sheep-reproduce sheep-stride-length-drift
 end
 
-to reproduce-wolves  ;; wolf procedure
-  reproduce wolf-reproduce wolf-stride-length-drift
+to reproduce-mosquitoes  ;; mosquito procedure
+  reproduce mosquito-reproduce mosquito-stride-length-drift
 end
 
 to reproduce [reproduction-chance drift] ;; turtle procedure
@@ -135,11 +135,11 @@ to-report mutated-stride-length [drift] ;; turtle reporter
   report l
 end
 
-to catch-sheep  ;; wolf procedure
+to catch-sheep  ;; mosquito procedure
   let prey one-of sheep-here
   if prey != nobody
   [ ask prey [ die ]
-    set energy energy + wolf-gain-from-food
+    set energy energy + mosquito-gain-from-food
     if energy > max-energy [set energy max-energy]
   ]
 end
