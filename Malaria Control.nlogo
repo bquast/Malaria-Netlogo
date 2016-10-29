@@ -3,6 +3,8 @@ breed [mosquitoes mosquito]
 breed [people person]
 breed [doctors doctor ]
 
+mosquitoes-own [ gender immunity ]
+
 to setup
   ;; (for this model to work with NetLogo's new plotting features,
   ;; __clear-all-and-reset-ticks should be replaced with clear-all at
@@ -29,7 +31,12 @@ to setup
     set color green
     set size 0.75  ;; easier to see
     setxy random-xcor random-ycor
-
+  ]
+   create-mosquitoes 1 ;; create one immune mosquito
+  [
+    set immunity true
+    set color yellow
+    setxy random-xcor random-ycor
   ]
 
   set-default-shape doctors "doctor"
