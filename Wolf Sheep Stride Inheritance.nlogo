@@ -208,10 +208,10 @@ HORIZONTAL
 SLIDER
 202
 31
-382
+445
 64
-initial-number-wolves
-initial-number-wolves
+initial-number-mosquitoes
+initial-number-mosquitoes
 0
 250
 30
@@ -271,7 +271,7 @@ true
 "" ""
 PENS
 "sheep" 1.0 0 -13345367 true "" "plot count sheep"
-"wolves" 1.0 0 -2674135 true "" "plot count wolves"
+"mosquitoes" 1.0 0 -2674135 true "" "plot count mosquitoes"
 "grass / 4" 1.0 0 -10899396 true "" ";; divide by four to keep it within similar\n;; range as wolf and sheep populations\nplot count patches with [ pcolor = green ] / 4"
 
 MONITOR
@@ -291,7 +291,7 @@ MONITOR
 231
 259
 wolves
-count wolves
+count mosquitoes
 3
 1
 11
@@ -345,10 +345,10 @@ HORIZONTAL
 SLIDER
 202
 65
-383
+410
 98
-initial-wolf-stride
-initial-wolf-stride
+initial-mosquito-stride
+initial-mosquito-stride
 0
 1
 0.2
@@ -388,16 +388,16 @@ true
 true
 "" ""
 PENS
-"wolves" 1.0 0 -2674135 true "" "if any? wolves\n[ plot mean [stride-length] of wolves ]"
+"mosquitoes" 1.0 0 -2674135 true "" "if any? mosquitoes\n[ plot mean [stride-length] of mosquitoes ]"
 "sheep" 1.0 0 -13345367 true "" "if any? sheep \n[ plot mean [stride-length] of sheep ]"
 
 SLIDER
 202
 137
-395
+460
 170
-wolf-stride-length-drift
-wolf-stride-length-drift
+mosquito-stride-length-drift
+mosquito-stride-length-drift
 0
 1
 0.2
@@ -411,7 +411,7 @@ PLOT
 419
 896
 612
-wolf stride histogram
+mosquito stride histogram
 stride
 number
 0.0
@@ -420,7 +420,7 @@ number
 10.0
 true
 false
-"set-histogram-num-bars 20" "histogram [ stride-length ] of wolves    ;; using the default plot pen"
+"set-histogram-num-bars 20" "histogram [ stride-length ] of mosquitoes    ;; using the default plot pen"
 PENS
 "default" 1.0 1 -2674135 true "" ""
 
