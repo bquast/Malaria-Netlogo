@@ -26,9 +26,17 @@ to setup
 
   ]
   set-default-shape mosquitoes "mosquito"  ;; shape is defined in Turtle Shapes Editor
-   create-mosquitoes initial-number-mosquitoes ;; create the mosquitoes, then initialize their variables
+   create-mosquitoes initial-number-mosquitoes / 2 ;; create the mosquitoes, then initialize their variables
   [
-    set color green
+    set color blue
+    set gender "male"
+    set size 0.75  ;; easier to see
+    setxy random-xcor random-ycor
+  ]
+   create-mosquitoes initial-number-mosquitoes / 2
+  [
+    set color pink
+    set gender "female"
     set size 0.75  ;; easier to see
     setxy random-xcor random-ycor
   ]
@@ -67,7 +75,7 @@ to move-people
 
     ifelse color = red ;if people are infectious they will infect mosquitoes who bite them in relation to the bite-likelihood
       [ask mosquitoes in-radius bite-likelihood
-        [if any? mosquitoes with [color = green]
+        [if any? mosquitoes with [color = pink]
                       [set color red]
         ]
       ]
@@ -134,8 +142,7 @@ to do-plots
   set-current-plot "Totals"
   set-current-plot-pen "people"
   plot count people with [color = red]
-
- end
+end
 
 
 
