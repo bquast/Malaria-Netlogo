@@ -16,13 +16,13 @@ to setup
 
   set-default-shape people "person"
     create-people 35 [
-    set color blue
+    set color green
     if who < initial-sick-people [set color red] ; these people start off with malaria
       set size 1.5  ;; easier to see
     setxy random-xcor random-ycor ;they are spread out randomly
     ifelse bed-nets ; if people use bed nets the people without malaria will be yellow and can not be bitten by a mosquito
             [ask people [if who >= initial-sick-people [set color yellow] ] ]
-            [ask people [if who >= initial-sick-people [set color blue] ] ]
+            [ask people [if who >= initial-sick-people [set color green] ] ]
 
   ]
   set-default-shape mosquitoes "mosquito"  ;; shape is defined in Turtle Shapes Editor
@@ -84,8 +84,8 @@ to move-people
         [ifelse color = red ;if mosquitoes are infectious they can infect nearby non-infected people
                       [ask people in-radius bite-likelihood [if any? people in-radius bite-likelihood with [color = blue]
                                                                               [set color red] ]]
-                      [ask people in-radius bite-likelihood with [color = blue] [if any? people in-radius bite-likelihood with [color = blue]
-                                                                              [set color blue]] ;if noninfectious mosquitoes bite noninfectious people, nothing happens
+                      [ask people in-radius bite-likelihood with [color = blue] [if any? people in-radius bite-likelihood with [color = green]
+                                                                              [set color green]] ;if noninfectious mosquitoes bite noninfectious people, nothing happens
 
        ]
       ]
@@ -100,11 +100,11 @@ to move-people
                                                                         [ask people in-radius .5 with [color = red]
                                                                         [set color yellow] ]
                                                                         [ask people in-radius .5 with [color = red]
-                                                                        [set color blue]] ]]]]
+                                                                        [set color green]] ]]]]
 
         [ask doctors in-radius .5 [if any? people in-radius .5 with [color = red] ;if the switch is off there are no doctors so this will not happen
                                                                   [ask people  in-radius .5
-                                                                  [set color blue] ]] ]
+                                                                  [set color green] ]] ]
 
 
 
