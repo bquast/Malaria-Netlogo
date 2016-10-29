@@ -463,10 +463,10 @@ stride-length-penalty?
 MONITOR
 34
 418
-139
+183
 463
-avg. wolf stride
-mean [stride-length] of wolves
+avg. mosquito stride
+mean [stride-length] of mosquitoes
 2
 1
 11
