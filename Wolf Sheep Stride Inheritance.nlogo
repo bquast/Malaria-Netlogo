@@ -8,6 +8,7 @@ globals [
   sheep-reproduce      ;; probability that sheep will reproduce at each time step
   mosquito-reproduce       ;; probability that mosquitoes will reproduce at each time step
   grass-regrowth-time  ;; number of ticks before eaten grass regrows.
+  bite-likelihood      ;; likelihood of biting when in radius
 ]
 
 breed [sheep a-sheep]
@@ -28,6 +29,7 @@ to setup
   set sheep-reproduce 5
   set mosquito-reproduce 6
   set grass-regrowth-time 138
+  set bite-likelihood 0.9
 
   ;; setup the grass
   ask patches [ set pcolor green ]
@@ -46,19 +48,27 @@ to setup
     set energy random max-energy
     setxy random-xcor random-ycor
   ]
+  create-sheep 1
+  [
+    set color red
+    set stride-length initial-sheep-stride
+    set size max-stride  ;; easier to see
+    set energy random max-energy
+    setxy random-xcor random-ycor
+  ]
 
   set-default-shape mosquitoes "mosquito"
   create-mosquitoes initial-number-mosquitoes  ;; create the mosquitoes, then initialize their variables
   [
     set male true
     set color blue
-    set stride-length initial-mosquito-stride
-    set size max-stride  ;; easier to see
     if random 2 = 0 ;; make half the mosquitoes female
     [
       set male false
       set color pink
     ]
+    set stride-length initial-mosquito-stride
+    set size max-stride  ;; easier to see
     set energy random max-energy
     setxy random-xcor random-ycor
   ]
@@ -75,6 +85,22 @@ to go
     ;; also deduct the energy for the distance moved
     if stride-length-penalty?
     [ set energy energy - stride-length ]
+    ifelse color = red ;if sheep are infectious they will infect mosquitoes who bite them in relation to the bite-likelihood
+      [ask mosquitoes in-radius bite-likelihood
+        [if any? mosquitoes with [color = pink]
+                      [set color red]
+        ]
+      ]
+      [ask mosquitoes in-radius bite-likelihood ; if sheep are not infectious they can be infected by infectious mosquitoes in relation to the bite-likelihood
+        [ifelse color = red ;if mosquitoes are infectious they can infect nearby non-infected sheep
+                      [ask sheep in-radius bite-likelihood [if any? sheep in-radius bite-likelihood with [color = blue]
+                                                                              [set color red] ]]
+                      [ask sheep in-radius bite-likelihood with [color = blue] [if any? sheep in-radius bite-likelihood with [color = green]
+                                                                              [set color green]] ;if noninfectious mosquitoes bite noninfectious sheep, nothing happens
+
+       ]
+      ]
+      ]
     eat-grass
     maybe-die
     reproduce-sheep
@@ -87,7 +113,7 @@ to go
     ;; also deduct the energy for the distance moved
     if stride-length-penalty?
     [ set energy energy - stride-length ]
-    catch-sheep
+    ;; catch-sheep
     maybe-die
     reproduce-mosquitoes
   ]
@@ -142,14 +168,14 @@ to-report mutated-stride-length [drift] ;; turtle reporter
   report l
 end
 
-to catch-sheep  ;; mosquito procedure
-  let prey one-of sheep-here
-  if prey != nobody
-  [ ; ask prey [ die
-    set energy energy + mosquito-gain-from-food
-    if energy > max-energy [set energy max-energy]
-  ]
-end
+;to catch-sheep  ;; mosquito procedure
+;  let prey one-of sheep-here
+;  if prey != nobody
+;  [ ; ask prey [ die
+;    set energy energy + mosquito-gain-from-food
+;    if energy > max-energy [set energy max-energy]
+;  ]
+;end
 
 to maybe-die  ;; turtle procedure
   ;; when energy dips below zero, die
@@ -297,7 +323,7 @@ MONITOR
 214
 231
 259
-wolves
+mosq.
 count mosquitoes
 3
 1
@@ -479,6 +505,17 @@ MONITOR
 avg. sheep stride
 mean [stride-length] of sheep
 2
+1
+11
+
+MONITOR
+311
+213
+391
+258
+inf. mosq.
+count mosquitoes with [ color = red ]
+17
 1
 11
 
