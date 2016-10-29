@@ -166,9 +166,9 @@ end
 GRAPHICS-WINDOW
 430
 12
-806
+830
 409
-30
+32
 30
 6.0
 1
@@ -180,8 +180,8 @@ GRAPHICS-WINDOW
 1
 1
 1
--30
-30
+-32
+32
 -30
 30
 1
@@ -709,6 +709,29 @@ line half
 true
 0
 Line -7500403 true 150 0 150 150
+
+mosquito
+false
+0
+Circle -7500403 true true 75 105 30
+Circle -7500403 true true 90 105 30
+Circle -7500403 true true 105 120 30
+Circle -7500403 true true 120 135 30
+Line -7500403 true 105 105 135 15
+Line -7500403 true 135 15 165 0
+Line -7500403 true 165 0 180 15
+Line -7500403 true 180 15 195 45
+Line -7500403 true 195 45 195 60
+Line -7500403 true 195 60 120 120
+Line -7500403 true 105 120 90 150
+Line -7500403 true 105 120 90 255
+Line -7500403 true 105 135 120 270
+Polygon -7500403 true true 90 105 30 165 90 120
+Line -7500403 true 105 105 90 15
+Line -7500403 true 90 15 60 30
+Line -7500403 true 60 30 45 60
+Line -7500403 true 45 60 105 120
+Circle -7500403 true true 135 150 30
 
 pentagon
 false
