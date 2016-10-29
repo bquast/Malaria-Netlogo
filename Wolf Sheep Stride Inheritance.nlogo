@@ -50,12 +50,13 @@ to setup
   set-default-shape mosquitoes "mosquito"
   create-mosquitoes initial-number-mosquitoes  ;; create the mosquitoes, then initialize their variables
   [
+    set male true
     set color blue
     set stride-length initial-mosquito-stride
     set size max-stride  ;; easier to see
-    if random 2 = 0
+    if random 2 = 0 ;; make half the mosquitoes female
     [
-      set male true
+      set male false
       set color pink
     ]
     set energy random max-energy
