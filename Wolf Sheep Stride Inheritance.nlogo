@@ -14,6 +14,7 @@ breed [sheep a-sheep]
 breed [mosquitoes mosquito]
 
 turtles-own [ energy stride-length ]
+mosquitoes-own [ male ]
 patches-own [ countdown ]  ;; patches countdown until they regrow
 
 to setup
@@ -49,9 +50,14 @@ to setup
   set-default-shape mosquitoes "mosquito"
   create-mosquitoes initial-number-mosquitoes  ;; create the mosquitoes, then initialize their variables
   [
-    set color black
+    set color blue
     set stride-length initial-mosquito-stride
     set size max-stride  ;; easier to see
+    if random 2 = 0
+    [
+      set male true
+      set color pink
+    ]
     set energy random max-energy
     setxy random-xcor random-ycor
   ]
@@ -138,7 +144,7 @@ end
 to catch-sheep  ;; mosquito procedure
   let prey one-of sheep-here
   if prey != nobody
-  [ ask prey [ die ]
+  [ ; ask prey [ die
     set energy energy + mosquito-gain-from-food
     if energy > max-energy [set energy max-energy]
   ]
