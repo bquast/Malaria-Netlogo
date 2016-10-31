@@ -179,16 +179,6 @@ to-report mutated-stride-length [drift] ;; turtle reporter
   report l
 end
 
-;to catch-sheep  ;; mosquito procedure
-
-;  let prey one-of sheep-here
-;  if prey != nobody
-;  [ ; ask prey [ die
-;    set energy energy + mosquito-gain-from-food
-;    if energy > max-energy [set energy max-energy]
-;  ]
-;end
-
 to maybe-die  ;; turtle procedure
   ;; when energy dips below zero, die
   if energy < 0 [ die ]
