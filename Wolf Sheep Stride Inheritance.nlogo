@@ -316,8 +316,8 @@ true
 true
 "" ""
 PENS
-"cows" 1.0 0 -13345367 true "" "plot count cows"
-"mosquitoes" 1.0 0 -2674135 true "" "plot count mosquitoes"
+"cows" 1.0 0 -16777216 true "" "plot count cows"
+"mosquitoes" 1.0 0 -13345367 true "" "plot count mosquitoes"
 "grass / 4" 1.0 0 -10899396 true "" ";; divide by four to keep it within similar\n;; range as wolf and sheep populations\nplot count patches with [ pcolor = green ] / 4"
 
 MONITOR
