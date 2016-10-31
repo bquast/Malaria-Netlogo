@@ -10,6 +10,7 @@ globals [
   grass-regrowth-time  ;; number of ticks before eaten grass regrows.
   bite-likelihood      ;; likelihood of biting when in radius
   initial-sheep-stride
+  initial-mosquito-stride
 ]
 
 breed [sheep a-sheep]
@@ -32,6 +33,7 @@ to setup
   set grass-regrowth-time 80
   set bite-likelihood 0.9
   set initial-sheep-stride 0.2
+  set initial-mosquito-stride 0.2
 
   ;; setup the grass
   ask patches [ set pcolor green ]
@@ -362,14 +364,14 @@ HORIZONTAL
 SLIDER
 202
 65
-410
+444
 98
-initial-mosquito-stride
-initial-mosquito-stride
+initial-infected-mosquitoes
+initial-infected-mosquitoes
+0
+100
 0
 1
-0.2
-0.1
 1
 NIL
 HORIZONTAL
