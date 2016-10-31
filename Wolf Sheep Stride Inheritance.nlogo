@@ -44,7 +44,7 @@ to setup
   ]
 
   set-default-shape cows "cow"
-  create-cows initial-number-cows  ;; create the cows, then initialize their variables
+  create-cows initial-clean-cows  ;; create the cows, then initialize their variables
   [
     set color white
     set stride-length initial-cows-stride
@@ -62,7 +62,7 @@ to setup
   ]
 
   set-default-shape mosquitoes "mosquito"
-  create-mosquitoes initial-number-mosquitoes  ;; create the mosquitoes, then initialize their variables
+  create-mosquitoes initial-clean-mosquitoes  ;; create the mosquitoes, then initialize their variables
   [
     set male true
     set color blue
@@ -241,8 +241,8 @@ SLIDER
 31
 215
 64
-initial-number-cows
-initial-number-cows
+initial-clean-cows
+initial-clean-cows
 0
 250
 64
@@ -256,8 +256,8 @@ SLIDER
 31
 445
 64
-initial-number-mosquitoes
-initial-number-mosquitoes
+initial-clean-mosquitoes
+initial-clean-mosquitoes
 0
 250
 30
