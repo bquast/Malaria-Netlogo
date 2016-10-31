@@ -50,7 +50,7 @@ to setup
     set energy random max-energy
     setxy random-xcor random-ycor
   ]
-  create-sheep 1
+  create-sheep initial-infected-sheep
   [
     set color red
     set stride-length initial-sheep-stride
@@ -344,26 +344,6 @@ count sheep with [ color = red ]
 1
 11
 
-TEXTBOX
-28
-11
-168
-30
-Sheep settings
-11
-0.0
-0
-
-TEXTBOX
-203
-11
-316
-29
-Wolf settings
-11
-0.0
-0
-
 SLIDER
 -2
 66
@@ -408,25 +388,6 @@ sheep-stride-length-drift
 1
 NIL
 HORIZONTAL
-
-PLOT
-34
-469
-370
-612
-stride length
-time
-stride
-0.0
-100.0
-0.0
-1.0
-true
-true
-"" ""
-PENS
-"mosquitoes" 1.0 0 -2674135 true "" "if any? mosquitoes\n[ plot mean [stride-length] of mosquitoes ]"
-"sheep" 1.0 0 -13345367 true "" "if any? sheep \n[ plot mean [stride-length] of sheep ]"
 
 SLIDER
 202
