@@ -79,6 +79,7 @@ to setup
   ]
   create-mosquitoes initial-immune-mosquitoes
   [
+    set immune true
     set male true
     set color yellow
     if random 2 = 0 ;; make half the mosquitoes female
@@ -491,6 +492,17 @@ initial-immune-cows
 1
 NIL
 HORIZONTAL
+
+MONITOR
+373
+322
+485
+367
+immune mosq.
+count mosquitoes with [ immune = true ]
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
