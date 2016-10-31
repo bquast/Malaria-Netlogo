@@ -400,7 +400,7 @@ MONITOR
 371
 165
 416
-prop. inf. cows
+inf. rate cows
 count cows with [ color = red ] / count cows
 4
 1
@@ -411,7 +411,7 @@ MONITOR
 370
 370
 415
-prop. inf. mosq.
+inf. rate mosquitoes
 count mosquitoes with [ color = red ] / count mosquitoes
 4
 1
