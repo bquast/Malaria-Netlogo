@@ -179,7 +179,7 @@ end
 
 to reproduce-mosquitoes  ;; mosquito procedure
   ;; reproduce mosquito-reproduce mosquito-stride-length-drift pink
-    if random-float 100 < mosquito-reproduce and energy > min-energy and color = pink [
+    if random-float 100 < mosquito-reproduce and energy > min-energy and male = false [
     set energy (energy / 2 )  ;; divide energy between parent and offspring
     hatch 1 [
       rt random-float 360
@@ -335,7 +335,6 @@ PENS
 "cows" 1.0 0 -16777216 true "" "plot count cows"
 "mosquitoes" 1.0 0 -13345367 true "" "plot count mosquitoes"
 "grass / 4" 1.0 0 -10899396 true "" ";; divide by four to keep it within similar\n;; range as wolf and sheep populations\nplot count patches with [ pcolor = green ] / 4"
-"inf. cows" 1.0 0 -2674135 true "" "plot count cows with [ color = red ]"
 
 MONITOR
 54
