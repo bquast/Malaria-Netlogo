@@ -156,21 +156,17 @@ to reproduce-sheep  ;; sheep procedure
 end
 
 to reproduce-mosquitoes  ;; mosquito procedure
-  reproduce mosquito-reproduce mosquito-stride-length-drift pink
-end
-
-to reproduce [reproduction-chance drift reproduce-color ] ;; turtle procedure
-  ;; throw "dice" to see if you will reproduce
-  if random-float 100 < reproduction-chance and energy > min-energy [
+  ;; reproduce mosquito-reproduce mosquito-stride-length-drift pink
+    if random-float 100 < mosquito-reproduce and energy > min-energy [
     set energy (energy / 2 )  ;; divide energy between parent and offspring
     hatch 1 [
       rt random-float 360
       fd 1
       ;; mutate the stride length based on the drift for this breed
-      set stride-length mutated-stride-length drift
-      set color reproduce-color
+      set stride-length mutated-stride-length mosquito-stride-length-drift
+      set color pink
     ]
-  ]
+    ]
 end
 
 to-report mutated-stride-length [drift] ;; turtle reporter
