@@ -350,10 +350,10 @@ PENS
 "grass / 4" 1.0 0 -10899396 true "" ";; divide by four to keep it within similar\n;; range as wolf and sheep populations\nplot count patches with [ pcolor = green ] / 4"
 
 MONITOR
-54
-324
-132
-369
+32
+323
+110
+368
 cows
 count cows
 3
@@ -361,10 +361,10 @@ count cows
 11
 
 MONITOR
-214
-323
-292
-368
+192
+322
+270
+367
 mosq.
 count mosquitoes
 3
@@ -372,10 +372,10 @@ count mosquitoes
 11
 
 MONITOR
-134
-324
-213
-369
+112
+323
+191
+368
 inf. cows
 count cows with [ color = red ]
 0
@@ -413,10 +413,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-291
-323
-371
-368
+269
+322
+349
+367
 inf. mosq.
 count mosquitoes with [ color = red ]
 17
@@ -424,10 +424,10 @@ count mosquitoes with [ color = red ]
 11
 
 MONITOR
-54
-371
-165
-416
+32
+370
+143
+415
 inf. rate cows
 count cows with [ color = red ] / count cows
 4
@@ -435,10 +435,10 @@ count cows with [ color = red ] / count cows
 11
 
 MONITOR
-214
-370
-370
-415
+192
+369
+348
+414
 inf. rate mosquitoes
 count mosquitoes with [ color = red ] / count mosquitoes
 4
@@ -495,10 +495,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-373
-322
-485
-367
+351
+321
+463
+366
 immune mosq.
 count mosquitoes with [ immune = true ]
 17
