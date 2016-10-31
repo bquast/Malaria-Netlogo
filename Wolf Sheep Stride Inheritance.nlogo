@@ -165,6 +165,9 @@ to reproduce-mosquitoes  ;; mosquito procedure
       ;; mutate the stride length based on the drift for this breed
       ;; set stride-length mutated-stride-length mosquito-stride-length-drift
       set color pink
+      if random-float 2 < 1 [
+        set color blue
+      ]
     ]
     ]
 end
