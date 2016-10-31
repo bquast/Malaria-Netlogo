@@ -9,6 +9,7 @@ globals [
   mosquito-reproduce       ;; probability that mosquitoes will reproduce at each time step
   grass-regrowth-time  ;; number of ticks before eaten grass regrows.
   bite-likelihood      ;; likelihood of biting when in radius
+  initial-sheep-stride
 ]
 
 breed [sheep a-sheep]
@@ -24,12 +25,13 @@ to setup
   set max-stride 3
   set min-energy 200
   set max-energy 500
-  set mosquito-gain-from-food 20
-  set sheep-gain-from-food 20
-  set sheep-reproduce 5
-  set mosquito-reproduce 6
-  set grass-regrowth-time 138
+  set mosquito-gain-from-food 300
+  set sheep-gain-from-food 10
+  set sheep-reproduce 3
+  set mosquito-reproduce 100
+  set grass-regrowth-time 80
   set bite-likelihood 0.9
+  set initial-sheep-stride 0.2
 
   ;; setup the grass
   ask patches [ set pcolor green ]
@@ -93,7 +95,7 @@ to go
       ]
       [ask mosquitoes in-radius bite-likelihood ; if sheep are not infectious they can be infected by infectious mosquitoes in relation to the bite-likelihood
         [ifelse color = red ;if mosquitoes are infectious they can infect nearby non-infected sheep
-                      [ask sheep in-radius bite-likelihood [if any? sheep in-radius bite-likelihood with [color = blue]
+                      [ask sheep in-radius bite-likelihood [if any? sheep in-radius bite-likelihood with [color = white]
                                                                               [set color red] ]]
                       [ask sheep in-radius bite-likelihood with [color = blue] [if any? sheep in-radius bite-likelihood with [color = green]
                                                                               [set color green]] ;if noninfectious mosquitoes bite noninfectious sheep, nothing happens
@@ -138,14 +140,14 @@ to eat-grass  ;; sheep procedure
 end
 
 to reproduce-sheep  ;; sheep procedure
-  reproduce sheep-reproduce sheep-stride-length-drift
+  reproduce sheep-reproduce sheep-stride-length-drift white
 end
 
 to reproduce-mosquitoes  ;; mosquito procedure
-  reproduce mosquito-reproduce mosquito-stride-length-drift
+  reproduce mosquito-reproduce mosquito-stride-length-drift pink
 end
 
-to reproduce [reproduction-chance drift] ;; turtle procedure
+to reproduce [reproduction-chance drift reproduce-color ] ;; turtle procedure
   ;; throw "dice" to see if you will reproduce
   if random-float 100 < reproduction-chance and energy > min-energy [
     set energy (energy / 2 )  ;; divide energy between parent and offspring
@@ -154,6 +156,7 @@ to reproduce [reproduction-chance drift] ;; turtle procedure
       fd 1
       ;; mutate the stride length based on the drift for this breed
       set stride-length mutated-stride-length drift
+      set color reproduce-color
     ]
   ]
 end
@@ -169,6 +172,7 @@ to-report mutated-stride-length [drift] ;; turtle reporter
 end
 
 ;to catch-sheep  ;; mosquito procedure
+
 ;  let prey one-of sheep-here
 ;  if prey != nobody
 ;  [ ; ask prey [ die
@@ -332,10 +336,10 @@ count mosquitoes
 MONITOR
 232
 214
-310
+311
 259
-grass / 4
-count patches with [ pcolor = green ] / 4
+inf. sheep
+count sheep with [ color = red ]
 0
 1
 11
@@ -361,16 +365,16 @@ Wolf settings
 0
 
 SLIDER
-20
-65
+-2
+66
 201
-98
-initial-sheep-stride
-initial-sheep-stride
+99
+initial-infected-sheep
+initial-infected-sheep
 0
+100
+2
 1
-0.2
-0.1
 1
 NIL
 HORIZONTAL
@@ -433,47 +437,11 @@ mosquito-stride-length-drift
 mosquito-stride-length-drift
 0
 1
-0.2
+0.21
 0.01
 1
 NIL
 HORIZONTAL
-
-PLOT
-634
-419
-896
-612
-mosquito stride histogram
-stride
-number
-0.0
-3.0
-0.0
-10.0
-true
-false
-"set-histogram-num-bars 20" "histogram [ stride-length ] of mosquitoes    ;; using the default plot pen"
-PENS
-"default" 1.0 1 -2674135 true "" ""
-
-PLOT
-371
-419
-633
-612
-sheep stride histogram
-stride
-number
-0.0
-3.0
-0.0
-10.0
-true
-false
-"set-histogram-num-bars 20" "histogram [ stride-length ] of sheep     ;; using the default plot pen"
-PENS
-"default" 1.0 1 -13345367 true "" ""
 
 SWITCH
 111
