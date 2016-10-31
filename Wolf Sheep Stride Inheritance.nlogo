@@ -29,7 +29,7 @@ to setup
   set mosquito-gain-from-food 50
   set cows-gain-from-food 8
   set cows-reproduce 1
-  set mosquito-reproduce 50
+  set mosquito-reproduce 20
   set grass-regrowth-time 80
   set bite-likelihood 0.5
   set initial-cows-stride 0.2
@@ -189,6 +189,7 @@ to reproduce-mosquitoes  ;; mosquito procedure
       ;; mutate the stride length based on the drift for this breed
       ;; set stride-length mutated-stride-length mosquito-stride-length-drift
       set color yellow
+      set immune true
       set male false
       if random-float 2 < 1 [
         set male true
