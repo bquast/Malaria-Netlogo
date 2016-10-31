@@ -26,10 +26,10 @@ to setup
   set max-stride 3
   set min-energy 200
   set max-energy 500
-  set mosquito-gain-from-food 300
+  set mosquito-gain-from-food 20
   set cows-gain-from-food 10
-  set cows-reproduce 3
-  set mosquito-reproduce 100
+  set cows-reproduce 1
+  set mosquito-reproduce 50
   set grass-regrowth-time 80
   set bite-likelihood 0.9
   set initial-cows-stride 0.2
@@ -87,20 +87,22 @@ to go
     set energy energy - 0.5
     ;; if larger strides use more energy
     ;; also deduct the energy for the distance moved
-    if stride-length-penalty?
-    [ set energy energy - stride-length ]
+    ;; if stride-length-penalty?
+    ;; [ set energy energy - stride-length ]
     ifelse color = red ;if cows are infectious they will infect mosquitoes who bite them in relation to the bite-likelihood
       [ask mosquitoes in-radius bite-likelihood
-        [if any? mosquitoes with [color = pink]
+        [eat-blood
+         if any? mosquitoes with [color = pink]
                       [set color red]
         ]
       ]
       [ask mosquitoes in-radius bite-likelihood ; if cows are not infectious they can be infected by infectious mosquitoes in relation to the bite-likelihood
-        [ifelse color = red ;if mosquitoes are infectious they can infect nearby non-infected cows
+        [eat-blood
+         ifelse color = red ;if mosquitoes are infectious they can infect nearby non-infected cows
                       [ask cows in-radius bite-likelihood [if any? cows in-radius bite-likelihood with [color = white]
                                                                               [set color red] ]]
-                      [ask cows in-radius bite-likelihood with [color = blue] [if any? cows in-radius bite-likelihood with [color = green]
-                                                                              [set color green]] ;if noninfectious mosquitoes bite noninfectious cows, nothing happens
+                      [ask cows in-radius bite-likelihood with [color = white] [if any? cows in-radius bite-likelihood with [color = white]
+                                                                              [set color white]] ;if noninfectious mosquitoes bite noninfectious cows, nothing happens
 
        ]
       ]
@@ -115,8 +117,8 @@ to go
     set energy energy - 0.5
     ;; if larger strides use more energy
     ;; also deduct the energy for the distance moved
-    if stride-length-penalty?
-    [ set energy energy - stride-length ]
+    ;; if stride-length-penalty?
+    ;; [ set energy energy - stride-length ]
     ;; catch-cows
     maybe-die
     reproduce-mosquitoes
@@ -141,6 +143,12 @@ to eat-grass  ;; cows procedure
   ]
 end
 
+to eat-blood ;; mosquito procedure
+    set energy energy + mosquito-gain-from-food
+    if energy > max-energy
+    [ set energy max-energy ]
+end
+
 to reproduce-cows  ;; cows procedure
   ;; reproduce cows-reproduce cows-stride-length-drift white
     if random-float 100 < cows-reproduce and energy > min-energy [
@@ -157,7 +165,7 @@ end
 
 to reproduce-mosquitoes  ;; mosquito procedure
   ;; reproduce mosquito-reproduce mosquito-stride-length-drift pink
-    if random-float 100 < mosquito-reproduce and energy > min-energy [
+    if random-float 100 < mosquito-reproduce and energy > min-energy and color = pink [
     set energy (energy / 2 )  ;; divide energy between parent and offspring
     hatch 1 [
       rt random-float 360
@@ -374,47 +382,6 @@ initial-infected-mosquitoes
 1
 NIL
 HORIZONTAL
-
-SLIDER
-8
-137
-201
-170
-sheep-stride-length-drift
-sheep-stride-length-drift
-0
-1
-0.2
-0.01
-1
-NIL
-HORIZONTAL
-
-SLIDER
-202
-137
-460
-170
-mosquito-stride-length-drift
-mosquito-stride-length-drift
-0
-1
-0.21
-0.01
-1
-NIL
-HORIZONTAL
-
-SWITCH
-111
-174
-307
-207
-stride-length-penalty?
-stride-length-penalty?
-0
-1
--1000
 
 MONITOR
 311
