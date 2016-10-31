@@ -142,7 +142,17 @@ to eat-grass  ;; sheep procedure
 end
 
 to reproduce-sheep  ;; sheep procedure
-  reproduce sheep-reproduce sheep-stride-length-drift white
+  ;; reproduce sheep-reproduce sheep-stride-length-drift white
+    if random-float 100 < sheep-reproduce and energy > min-energy [
+    set energy (energy / 2 )  ;; divide energy between parent and offspring
+    hatch 1 [
+      rt random-float 360
+      fd 1
+      ;; mutate the stride length based on the drift for this breed
+      set stride-length mutated-stride-length sheep-stride-length-drift
+      set color white
+    ]
+    ]
 end
 
 to reproduce-mosquitoes  ;; mosquito procedure
