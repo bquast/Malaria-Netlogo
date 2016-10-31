@@ -237,10 +237,10 @@ ticks
 30.0
 
 SLIDER
-20
-31
-215
-64
+10
+204
+205
+237
 initial-clean-cows
 initial-clean-cows
 0
@@ -252,10 +252,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-202
-31
-445
-64
+213
+204
+456
+237
 initial-clean-mosquitoes
 initial-clean-mosquitoes
 0
@@ -267,10 +267,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-132
-101
-201
-134
+3
+11
+211
+44
 setup
 setup
 NIL
@@ -284,10 +284,10 @@ NIL
 1
 
 BUTTON
-202
-101
-271
-134
+215
+11
+459
+44
 go
 go
 T
@@ -301,10 +301,10 @@ NIL
 0
 
 PLOT
-33
-265
-369
-408
+31
+587
+452
+730
 populations
 time
 pop.
@@ -319,12 +319,13 @@ PENS
 "cows" 1.0 0 -16777216 true "" "plot count cows"
 "mosquitoes" 1.0 0 -13345367 true "" "plot count mosquitoes"
 "grass / 4" 1.0 0 -10899396 true "" ";; divide by four to keep it within similar\n;; range as wolf and sheep populations\nplot count patches with [ pcolor = green ] / 4"
+"inf. cows" 1.0 0 -2674135 true "" "plot count cows with [ color = red ]"
 
 MONITOR
-74
-214
-152
-259
+54
+324
+132
+369
 cows
 count cows
 3
@@ -332,10 +333,10 @@ count cows
 11
 
 MONITOR
-153
 214
-231
-259
+323
+292
+368
 mosq.
 count mosquitoes
 3
@@ -343,10 +344,10 @@ count mosquitoes
 11
 
 MONITOR
-232
-214
-311
-259
+134
+324
+213
+369
 inf. cows
 count cows with [ color = red ]
 0
@@ -354,10 +355,10 @@ count cows with [ color = red ]
 11
 
 SLIDER
--2
-66
-201
-99
+9
+239
+212
+272
 initial-infected-cows
 initial-infected-cows
 0
@@ -369,10 +370,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-202
-65
-444
-98
+213
+238
+455
+271
 initial-infected-mosquitoes
 initial-infected-mosquitoes
 0
@@ -384,15 +385,56 @@ NIL
 HORIZONTAL
 
 MONITOR
-311
-213
-391
-258
+291
+323
+371
+368
 inf. mosq.
 count mosquitoes with [ color = red ]
 17
 1
 11
+
+MONITOR
+54
+371
+165
+416
+prop. inf. cows
+count cows with [ color = red ] / count cows
+4
+1
+11
+
+MONITOR
+214
+370
+370
+415
+prop. inf. mosq.
+count mosquitoes with [ color = red ] / count mosquitoes
+4
+1
+11
+
+PLOT
+32
+432
+452
+582
+infection rates
+time
+inf. rate
+0.0
+10.0
+0.0
+0.1
+true
+false
+"" ""
+PENS
+"cows" 1.0 0 -16777216 true "" "plot count cows with [ color = red ] / count cows"
+"mosquitoes" 1.0 0 -2064490 true "" "plot count mosquitoes with [ color = red ] / count mosquitoes"
 
 @#$#@#$#@
 ## WHAT IS IT?
