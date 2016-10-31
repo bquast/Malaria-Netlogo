@@ -4,16 +4,16 @@ globals [
   max-stride           ;; the maximum stride length, the minimum stride length is 0,
                        ;; the stride will always be between these limits
   mosquito-gain-from-food  ;; energy units mosquitoes get for eating
-  sheep-gain-from-food ;; energy units sheep get for eating
-  sheep-reproduce      ;; probability that sheep will reproduce at each time step
+  cows-gain-from-food ;; energy units cows get for eating
+  cows-reproduce      ;; probability that cows will reproduce at each time step
   mosquito-reproduce       ;; probability that mosquitoes will reproduce at each time step
   grass-regrowth-time  ;; number of ticks before eaten grass regrows.
   bite-likelihood      ;; likelihood of biting when in radius
-  initial-sheep-stride
+  initial-cows-stride
   initial-mosquito-stride
 ]
 
-breed [sheep a-sheep]
+breed [cows cow]
 breed [mosquitoes mosquito]
 
 turtles-own [ energy stride-length ]
@@ -27,12 +27,12 @@ to setup
   set min-energy 200
   set max-energy 500
   set mosquito-gain-from-food 300
-  set sheep-gain-from-food 10
-  set sheep-reproduce 3
+  set cows-gain-from-food 10
+  set cows-reproduce 3
   set mosquito-reproduce 100
   set grass-regrowth-time 80
   set bite-likelihood 0.9
-  set initial-sheep-stride 0.2
+  set initial-cows-stride 0.2
   set initial-mosquito-stride 0.2
 
   ;; setup the grass
@@ -43,19 +43,19 @@ to setup
       [ set pcolor brown ]
   ]
 
-  set-default-shape sheep "sheep"
-  create-sheep initial-number-sheep  ;; create the sheep, then initialize their variables
+  set-default-shape cows "cow"
+  create-cows initial-number-cows  ;; create the cows, then initialize their variables
   [
     set color white
-    set stride-length initial-sheep-stride
+    set stride-length initial-cows-stride
     set size max-stride  ;; easier to see
     set energy random max-energy
     setxy random-xcor random-ycor
   ]
-  create-sheep initial-infected-sheep
+  create-cows initial-infected-cows
   [
     set color red
-    set stride-length initial-sheep-stride
+    set stride-length initial-cows-stride
     set size max-stride  ;; easier to see
     set energy random max-energy
     setxy random-xcor random-ycor
@@ -81,33 +81,33 @@ end
 
 to go
   if not any? turtles [ stop ]
-  ask sheep [
+  ask cows [
     move
-    ;; sheep always loose 0.5 units of energy each tick
+    ;; cows always loose 0.5 units of energy each tick
     set energy energy - 0.5
     ;; if larger strides use more energy
     ;; also deduct the energy for the distance moved
     if stride-length-penalty?
     [ set energy energy - stride-length ]
-    ifelse color = red ;if sheep are infectious they will infect mosquitoes who bite them in relation to the bite-likelihood
+    ifelse color = red ;if cows are infectious they will infect mosquitoes who bite them in relation to the bite-likelihood
       [ask mosquitoes in-radius bite-likelihood
         [if any? mosquitoes with [color = pink]
                       [set color red]
         ]
       ]
-      [ask mosquitoes in-radius bite-likelihood ; if sheep are not infectious they can be infected by infectious mosquitoes in relation to the bite-likelihood
-        [ifelse color = red ;if mosquitoes are infectious they can infect nearby non-infected sheep
-                      [ask sheep in-radius bite-likelihood [if any? sheep in-radius bite-likelihood with [color = white]
+      [ask mosquitoes in-radius bite-likelihood ; if cows are not infectious they can be infected by infectious mosquitoes in relation to the bite-likelihood
+        [ifelse color = red ;if mosquitoes are infectious they can infect nearby non-infected cows
+                      [ask cows in-radius bite-likelihood [if any? cows in-radius bite-likelihood with [color = white]
                                                                               [set color red] ]]
-                      [ask sheep in-radius bite-likelihood with [color = blue] [if any? sheep in-radius bite-likelihood with [color = green]
-                                                                              [set color green]] ;if noninfectious mosquitoes bite noninfectious sheep, nothing happens
+                      [ask cows in-radius bite-likelihood with [color = blue] [if any? cows in-radius bite-likelihood with [color = green]
+                                                                              [set color green]] ;if noninfectious mosquitoes bite noninfectious cows, nothing happens
 
        ]
       ]
       ]
     eat-grass
     maybe-die
-    reproduce-sheep
+    reproduce-cows
   ]
   ask mosquitoes [
     move
@@ -117,7 +117,7 @@ to go
     ;; also deduct the energy for the distance moved
     if stride-length-penalty?
     [ set energy energy - stride-length ]
-    ;; catch-sheep
+    ;; catch-cows
     maybe-die
     reproduce-mosquitoes
   ]
@@ -131,25 +131,25 @@ to move  ;; turtle procedure
   fd stride-length
 end
 
-to eat-grass  ;; sheep procedure
-  ;; sheep eat grass, turn the patch brown
+to eat-grass  ;; cows procedure
+  ;; cows eat grass, turn the patch brown
   if pcolor = green [
     set pcolor brown
-    set energy energy + sheep-gain-from-food  ;; sheep gain energy by eating
+    set energy energy + cows-gain-from-food  ;; cows gain energy by eating
     if energy > max-energy
     [ set energy max-energy ]
   ]
 end
 
-to reproduce-sheep  ;; sheep procedure
-  ;; reproduce sheep-reproduce sheep-stride-length-drift white
-    if random-float 100 < sheep-reproduce and energy > min-energy [
+to reproduce-cows  ;; cows procedure
+  ;; reproduce cows-reproduce cows-stride-length-drift white
+    if random-float 100 < cows-reproduce and energy > min-energy [
     set energy (energy / 2 )  ;; divide energy between parent and offspring
     hatch 1 [
       rt random-float 360
       fd 1
       ;; mutate the stride length based on the drift for this breed
-      ;; set stride-length mutated-stride-length sheep-stride-length-drift
+      ;; set stride-length mutated-stride-length cows-stride-length-drift
       set color white
     ]
     ]
@@ -228,10 +228,10 @@ ticks
 SLIDER
 20
 31
-201
+215
 64
-initial-number-sheep
-initial-number-sheep
+initial-number-cows
+initial-number-cows
 0
 250
 64
@@ -305,7 +305,7 @@ true
 true
 "" ""
 PENS
-"sheep" 1.0 0 -13345367 true "" "plot count sheep"
+"cows" 1.0 0 -13345367 true "" "plot count cows"
 "mosquitoes" 1.0 0 -2674135 true "" "plot count mosquitoes"
 "grass / 4" 1.0 0 -10899396 true "" ";; divide by four to keep it within similar\n;; range as wolf and sheep populations\nplot count patches with [ pcolor = green ] / 4"
 
@@ -314,8 +314,8 @@ MONITOR
 214
 152
 259
-sheep
-count sheep
+cows
+count cows
 3
 1
 11
@@ -336,8 +336,8 @@ MONITOR
 214
 311
 259
-inf. sheep
-count sheep with [ color = red ]
+inf. cows
+count cows with [ color = red ]
 0
 1
 11
@@ -347,8 +347,8 @@ SLIDER
 66
 201
 99
-initial-infected-sheep
-initial-infected-sheep
+initial-infected-cows
+initial-infected-cows
 0
 100
 2
