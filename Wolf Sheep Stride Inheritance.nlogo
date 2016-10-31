@@ -26,12 +26,12 @@ to setup
   set max-stride 3
   set min-energy 200
   set max-energy 500
-  set mosquito-gain-from-food 20
-  set cows-gain-from-food 10
+  set mosquito-gain-from-food 50
+  set cows-gain-from-food 8
   set cows-reproduce 1
   set mosquito-reproduce 50
   set grass-regrowth-time 80
-  set bite-likelihood 0.9
+  set bite-likelihood 0.5
   set initial-cows-stride 0.2
   set initial-mosquito-stride 0.2
 
@@ -210,13 +210,13 @@ end
 ; See Info tab for full copyright and license.
 @#$#@#$#@
 GRAPHICS-WINDOW
-430
+466
 12
-830
-409
+1213
+734
 32
 30
-6.0
+11.34
 1
 20
 1
