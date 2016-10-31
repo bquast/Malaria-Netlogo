@@ -149,7 +149,7 @@ to reproduce-sheep  ;; sheep procedure
       rt random-float 360
       fd 1
       ;; mutate the stride length based on the drift for this breed
-      set stride-length mutated-stride-length sheep-stride-length-drift
+      ;; set stride-length mutated-stride-length sheep-stride-length-drift
       set color white
     ]
     ]
@@ -163,21 +163,21 @@ to reproduce-mosquitoes  ;; mosquito procedure
       rt random-float 360
       fd 1
       ;; mutate the stride length based on the drift for this breed
-      set stride-length mutated-stride-length mosquito-stride-length-drift
+      ;; set stride-length mutated-stride-length mosquito-stride-length-drift
       set color pink
     ]
     ]
 end
 
-to-report mutated-stride-length [drift] ;; turtle reporter
-  let l stride-length + random-float drift - random-float drift
-  ;; keep the stride lengths within the accepted bounds
-  if l < 0
-  [ report 0 ]
-  if stride-length > max-stride
-  [ report max-stride ]
-  report l
-end
+;;to-report mutated-stride-length [drift] ;; turtle reporter
+;;  let l stride-length + random-float drift - random-float drift
+;;  ;; keep the stride lengths within the accepted bounds
+;;  if l < 0
+;;  [ report 0 ]
+;;  if stride-length > max-stride
+;;  [ report max-stride ]
+;;  report l
+;;end
 
 to maybe-die  ;; turtle procedure
   ;; when energy dips below zero, die
