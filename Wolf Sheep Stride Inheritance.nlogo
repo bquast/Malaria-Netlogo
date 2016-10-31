@@ -181,7 +181,19 @@ to reproduce-mosquitoes  ;; mosquito procedure
   ;; reproduce mosquito-reproduce mosquito-stride-length-drift pink
     if random-float 100 < mosquito-reproduce and energy > min-energy and male = false [
     set energy (energy / 2 )  ;; divide energy between parent and offspring
-    hatch 1 [
+    ifelse immune = true
+    [ hatch 1 [
+      rt random-float 360
+      fd 1
+      ;; mutate the stride length based on the drift for this breed
+      ;; set stride-length mutated-stride-length mosquito-stride-length-drift
+      set color yellow
+      set male false
+      if random-float 2 < 1 [
+        set male true
+      ]
+    ]]
+    [ hatch 1 [
       rt random-float 360
       fd 1
       ;; mutate the stride length based on the drift for this breed
@@ -192,8 +204,7 @@ to reproduce-mosquitoes  ;; mosquito procedure
         set male true
         set color blue
       ]
-    ]
-    ]
+    ]]]
 end
 
 ;;to-report mutated-stride-length [drift] ;; turtle reporter
