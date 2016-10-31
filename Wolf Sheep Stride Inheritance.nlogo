@@ -414,28 +414,6 @@ stride-length-penalty?
 -1000
 
 MONITOR
-34
-418
-183
-463
-avg. mosquito stride
-mean [stride-length] of mosquitoes
-2
-1
-11
-
-MONITOR
-265
-419
-370
-464
-avg. sheep stride
-mean [stride-length] of sheep
-2
-1
-11
-
-MONITOR
 311
 213
 391
