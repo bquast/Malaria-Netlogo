@@ -17,7 +17,7 @@ breed [cows cow]
 breed [mosquitoes mosquito]
 
 turtles-own [ energy stride-length ]
-mosquitoes-own [ male ]
+mosquitoes-own [ male immune ]
 patches-own [ countdown ]  ;; patches countdown until they regrow
 
 to setup
@@ -71,6 +71,20 @@ to setup
       set male false
       set color pink
     ]
+    set immune false
+    set stride-length initial-mosquito-stride
+    set size max-stride  ;; easier to see
+    set energy random max-energy
+    setxy random-xcor random-ycor
+  ]
+  create-mosquitoes initial-immune-mosquitoes
+  [
+    set male true
+    set color yellow
+    if random 2 = 0 ;; make half the mosquitoes female
+    [
+      set male false
+    ]
     set stride-length initial-mosquito-stride
     set size max-stride  ;; easier to see
     set energy random max-energy
@@ -84,7 +98,7 @@ to go
   ask cows [
     move
     ;; cows always loose 0.5 units of energy each tick
-    set energy energy - 0.5
+    set energy energy - 0.8
     ;; if larger strides use more energy
     ;; also deduct the energy for the distance moved
     ;; if stride-length-penalty?
@@ -173,7 +187,9 @@ to reproduce-mosquitoes  ;; mosquito procedure
       ;; mutate the stride length based on the drift for this breed
       ;; set stride-length mutated-stride-length mosquito-stride-length-drift
       set color pink
+      set male false
       if random-float 2 < 1 [
+        set male true
         set color blue
       ]
     ]
@@ -435,6 +451,36 @@ false
 PENS
 "cows" 1.0 0 -16777216 true "" "plot count cows with [ color = red ] / count cows"
 "mosquitoes" 1.0 0 -2064490 true "" "plot count mosquitoes with [ color = red ] / count mosquitoes"
+
+SLIDER
+214
+273
+458
+306
+initial-immune-mosquitoes
+initial-immune-mosquitoes
+0
+100
+1
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+8
+273
+204
+306
+initial-immune-cows
+initial-immune-cows
+0
+100
+0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
